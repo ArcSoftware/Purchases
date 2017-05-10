@@ -29,6 +29,5 @@ table {
 
 body {
     background: -webkit-linear-gradient(#27AE60, #E74C3C); /* For Safari 5.1 to 6.0 */
-    background: -moz-linear-gradient(#27AE60, #E74C3C); /* For Firefox 3.6 to 15 */
     background: linear-gradient(#27AE60, #E74C3C); /* Standard syntax (must be last) */
 }

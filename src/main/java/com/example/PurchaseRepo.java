@@ -1,5 +1,6 @@
 package com.example;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -9,10 +10,8 @@ import java.util.List;
  */
 public interface PurchaseRepo extends CrudRepository<Purchase, Integer> {
     List<Purchase> findByCategory(String category);
-//    List<Purchase> findByAlcohol(String Alcohol);
-//    List<Purchase> findByToiletries(String Toiletries);
-//    List<Purchase> findByShoes(String Shoes);
-//    List<Purchase> findByFood(String Food);
-//    List<Purchase> findByJewelry(String Jewelry);
+    @Query("SELECT g FROM Customer g WHERE g.name LIKE ?1%")
+    List<Purchase> findByNameStartsWith(String name);
+
 
 }

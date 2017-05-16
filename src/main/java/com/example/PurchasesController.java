@@ -1,6 +1,8 @@
 package com.example;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +12,6 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -26,14 +27,28 @@ public class PurchasesController {
     PurchaseRepo purchases;
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public String home(Model model, HttpSession session, String category) {
-        List<Purchase> purchaseList;
-        if (category != null) {
-            purchaseList = purchases.findByCategory(category);
+    public String home(Model model, HttpSession session, String category, String search, Integer page) {
+        page = (page == null) ? 0 : page;
+        // <expression> ? <thing to return if true> : <thing to return if false>
+        //setting page to 0 if null.
+
+        PageRequest pr = new PageRequest(page, 10);
+        Page<Purchase> p;
+
+
+        Page<Purchase> purchaseList; //storing results into Page object
+        if (category != null) { //get the page of results from the category
+            purchaseList = purchases.findByCategory(pr, category);
         }else{
-            purchaseList = (List)purchases.findAll();
+            purchaseList = purchases.findAll(pr);
         }
         model.addAttribute("purchases", purchaseList);
+        model.addAttribute("nextPage", page+1); //adding link to next page
+        model.addAttribute("showNext", purchaseList.hasNext()); //decide wether or not we need a next page link
+        model.addAttribute("previousPage", page-1);
+        model.addAttribute("showBack", page > 0);
+        model.addAttribute("category", category); //add the category we are in to model.
+        //we need to know the category if it exists if we want to render the appropriate "next" link.
         return "home";
 
     }

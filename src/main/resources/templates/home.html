@@ -16,10 +16,7 @@
 <a href="/?category=Jewelry">Jewelry</a>
 
 <br><br>
-<form action="/" method="get">
-    <input type="text" placeholder="Search" name="search"/>
-    <button type="submit">Search</button>
-</form>
+
 
 <br><br>
 
@@ -44,6 +41,11 @@
     </tr>
     {{/purchases}}
 </table>
-
+{{#showBack}}
+<a href="/?page={{previousPage}}{{#category}}&category={{.}}{{/category}}"><button>Previous Page</button></a>
+{{/showBack}}
+{{#showNext}}
+<a href="/?page={{nextPage}}{{#category}}&category={{.}}{{/category}}"><button>Next Page</button></a>
+{{/showNext}}
 </body>
 </html>

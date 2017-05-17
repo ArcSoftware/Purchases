@@ -33,8 +33,6 @@ public class PurchasesController {
         //setting page to 0 if null.
 
         PageRequest pr = new PageRequest(page, 10);
-        Page<Purchase> p;
-
 
         Page<Purchase> purchaseList; //storing results into Page object
         if (category != null) { //get the page of results from the category
